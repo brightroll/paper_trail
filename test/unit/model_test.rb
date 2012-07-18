@@ -118,8 +118,8 @@ class HasPaperTrailModelTest < ActiveSupport::TestCase
       assert_equal [], @widget.versions
     end
 
-    should 'be live' do
-      assert @widget.live?
+    should 'be current_version' do
+      assert @widget.current_version?
     end
 
 
@@ -139,8 +139,8 @@ class HasPaperTrailModelTest < ActiveSupport::TestCase
         assert_match /create/i, @widget.versions.first.event
       end
 
-      should 'be live' do
-        assert @widget.live?
+      should 'be current_version' do
+        assert @widget.current_version?
       end
 
       should 'not have changes' do
@@ -179,8 +179,8 @@ class HasPaperTrailModelTest < ActiveSupport::TestCase
           assert_match /update/i, @widget.versions.last.event
         end
 
-        should 'have versions that are not live' do
-          assert @widget.versions.map(&:reify).compact.all? { |w| !w.live? }
+        should 'have versions that are not current_version' do
+          assert @widget.versions.map(&:reify).compact.all? { |w| !w.current_version? }
         end
 
         should 'have stored changes' do

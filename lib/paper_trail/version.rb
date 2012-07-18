@@ -3,6 +3,8 @@ class Version < ActiveRecord::Base
   validates_presence_of :event
   attr_accessible :item_type, :item_id, :event, :whodunnit, :object, :object_changes
 
+  after_save :change_notifier
+
   def self.with_item_keys(item_type, item_id)
     scoped(:conditions => { :item_type => item_type, :item_id => item_id })
   end
@@ -175,4 +177,7 @@ class Version < ActiveRecord::Base
     end
   end
 
+  def change_notifier
+    #Does nothing -- you have to implement the notification yourself in your application
+  end
 end
